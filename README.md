@@ -107,8 +107,3 @@ Este projeto atende aos critérios de:
 - Autenticação funcional sem necessidade de bibliotecas externas
 
 ---
-
-## 📅 Entrega
-
-- O formulário de conclusão deve ser preenchido até **18/04/2025**
-- Link: [https://forms.gle/SUPMbEtMdS6f9arK6](https://forms.gle/SUPMbEtMdS6f9arK6)
