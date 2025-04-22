@@ -2,14 +2,24 @@ import * as jose from 'jose';
 import { cookies } from 'next/headers';
 
 async function openSessionToken(token: string) {
-  const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
+  const rawSecret = process.env.AUTH_SECRET;
+if (!rawSecret || rawSecret.trim() === '') {
+  throw new Error('AUTH_SECRET não está definida.');
+}
+const secret = new TextEncoder().encode(rawSecret);
+
   const { payload } = await jose.jwtVerify(token, secret);
 
   return payload;
 }
 
 async function createSessionToken(payload = {}) {
-  const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
+  const rawSecret = process.env.AUTH_SECRET;
+if (!rawSecret || rawSecret.trim() === '') {
+  throw new Error('AUTH_SECRET não está definida.');
+}
+const secret = new TextEncoder().encode(rawSecret);
+
   const session = await new jose.SignJWT(payload)
     .setProtectedHeader({
       alg: 'HS256',
