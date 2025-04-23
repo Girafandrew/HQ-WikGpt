@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Card,
@@ -10,9 +12,14 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
+import { createAccount } from '../actions/server-actions';
+import { useFormState } from 'react-dom';
 import AuthActions from '../actions/auth-actions';
 
 export default function SignUpForm() {
+  const initialState = { error: '' };
+  const [state, formAction] = useFormState(createAccount, initialState);
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -21,7 +28,7 @@ export default function SignUpForm() {
           Preencha os campos abaixo para criar conta.
         </CardDescription>
       </CardHeader>
-      <form action={AuthActions.createAccount}>
+      <form action={formAction}>
         <CardContent>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
@@ -36,6 +43,13 @@ export default function SignUpForm() {
               <Label htmlFor="password">Senha</Label>
               <Input id="password" name="password" type="password" required />
             </div>
+            {/* Mensagem de erro com ícone */}
+            {state.error && (
+              <div className="flex items-center gap-2 text-red-500 text-sm mt-2">
+                <span aria-hidden="true">⚠️</span>
+                <span>{state.error}</span>
+              </div>
+            )}
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
